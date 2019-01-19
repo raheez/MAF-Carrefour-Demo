@@ -8,6 +8,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/header_rv"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@color/colorPrimary"
@@ -35,17 +36,31 @@
             />
 
 
+
+
     </RelativeLayout>
 
     <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        app:itemBackground="@color/lightgrey"
+        app:itemIconTint="@drawable/nav_bar"
+        app:itemTextColor="@drawable/nav_bar"
         app:menu="@menu/navigation"
+        android:enabled="true"
         >
 
     </android.support.design.widget.BottomNavigationView>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frame_layout"
+        android:layout_below="@+id/header_rv"
+        android:layout_above="@id/bottomNav">
+
+    </FrameLayout>
 </RelativeLayout>

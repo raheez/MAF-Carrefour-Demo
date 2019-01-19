@@ -2,19 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_songs"
+        android:id="@+id/navigation_home"
         android:icon="@drawable/home_icon"
-        android:title="Home"/>
+        android:title="Home"
+        android:enabled="true"/>
 
     <item
         android:id="@+id/navigation_shoping"
-        android:icon="@drawable/shopping_icon"
-        android:title="Shop"/>
+        android:icon="@drawable/s_icon"
+        android:title="Shop"
+        android:enabled="true"/>
 
     <item
-        android:id="@+id/navigation_artists2"
+        android:id="@+id/navigation_cart"
         android:icon="@drawable/cart_icon"
-        android:title="Cart"/>
+        android:title="Cart"
+        android:enabled="true"/>
 
 
 
