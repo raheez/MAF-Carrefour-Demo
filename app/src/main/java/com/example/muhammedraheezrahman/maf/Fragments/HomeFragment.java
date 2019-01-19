@@ -3,12 +3,22 @@ package com.example.muhammedraheezrahman.maf.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.example.muhammedraheezrahman.maf.CustomPagerAdapter;
 import com.example.muhammedraheezrahman.maf.R;
+
+import java.sql.Time;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -24,6 +34,13 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static  ViewPager viewPager;
+    private ImageView imageView;
+    private Timer timer;
+    private final long DELAY_TIME = 500;
+    private final long PERIOD_TIME = 2000;
+    private  int CURRENT_PAGE = 0;
+    private  int NO_OF_PAGE = 0;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -66,7 +83,41 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        final View view =  inflater.inflate(R.layout.fragment_home, container, false);
+        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        imageView = (ImageView) view.findViewById(R.id.imageView);
+        String url[] = new String[]{"https://image.shutterstock.com/z/stock-vector-vector-sale-faceted-d-banner-poster-colorful-illustration-572608936.jpg"
+                                    ,"https://image.shutterstock.com/image-vector/sale-banner-template-design-big-450w-1005958072.jpg"
+                                    ,"https://image.shutterstock.com/image-vector/bright-sale-banner-design-vector-450w-730408768.jpg"
+                                    ,"https://image.shutterstock.com/image-photo/sale-concept-collection-female-shoes-450w-455544916.jpg"
+                                    ,"https://image.shutterstock.com/image-vector/sale-poster-shopping-bag-450w-606454742.jpg"};
+        NO_OF_PAGE = url.length;
+
+        PagerAdapter adapter = new CustomPagerAdapter(url,getActivity());
+        viewPager.setAdapter(adapter);
+
+        final Handler handler = new Handler();
+        final Runnable update = new Runnable() {
+            @Override
+            public void run() {
+                if (CURRENT_PAGE == NO_OF_PAGE -1){
+                   CURRENT_PAGE = 0;
+
+                }
+                viewPager.setCurrentItem(CURRENT_PAGE++,true);
+
+            }
+        };
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(update);
+            }
+        },DELAY_TIME,PERIOD_TIME);
+
+        return  view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
