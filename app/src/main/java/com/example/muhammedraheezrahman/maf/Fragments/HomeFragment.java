@@ -1,6 +1,7 @@
 package com.example.muhammedraheezrahman.maf.Fragments;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import com.example.muhammedraheezrahman.maf.Adapter.CustomPagerAdapter;
 import com.example.muhammedraheezrahman.maf.Adapter.RecyclerHomeAdapter;
 import com.example.muhammedraheezrahman.maf.Adapter.RecyclerHomeProductAdapter;
+import com.example.muhammedraheezrahman.maf.Database.DatabaseHelper;
 import com.example.muhammedraheezrahman.maf.Model.Product;
 import com.example.muhammedraheezrahman.maf.R;
 
@@ -56,6 +58,7 @@ public class HomeFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager_categories;
     private LinearLayoutManager linearLayoutManager_electronics;
     private LinearLayoutManager linearLayoutManager_smartPhones;
+    private DatabaseHelper databaseHelper;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -98,7 +101,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         final View view =  inflater.inflate(R.layout.fragment_home, container, false);
+        databaseHelper = new DatabaseHelper(getActivity());
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         String urlImageSlider[] = new String[]{"https://image.shutterstock.com/image-vector/sale-banner-template-design-big-450w-1005958072.jpg"
                                     ,"https://image.shutterstock.com/z/stock-vector-vector-sale-faceted-d-banner-poster-colorful-illustration-572608936.jpg"
@@ -174,17 +179,19 @@ public class HomeFragment extends Fragment {
                                                     ,"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/BlackBerry-Priv.jpg/1200px-BlackBerry-Priv.jpg"
                                                     ,"https://photos.dialcom.lk/big/items/-passport-mobile-phones-price-in-sri-lanka_374_jpg"};
         List<Product> productList = new ArrayList<>();
-        productList.add(new Product("Samsung Note9 64GB",smartphoneImageURL[0],2890,"smartPhone",false,false));
-        productList.add(new Product("Samsung S8 128GB",smartphoneImageURL[1],2200,"smartPhone",false,false));
-        productList.add(new Product("Huawei Mate 20 pro 256GB",smartphoneImageURL[2],2600,"smartPhone",false,false));
-        productList.add(new Product("Asus Zenfone 64GB",smartphoneImageURL[3],1400 ,"smartPhone",false,false));
-        productList.add(new Product("Apple Iphone Xsmax 256GB ",smartphoneImageURL[4],3300,"smartPhone",false,false));
-        productList.add(new Product("Apple Iphone 8 128GB",smartphoneImageURL[5],2090,"smartPhone",false,false));
-        productList.add(new Product("Blackberry Priv",smartphoneImageURL[6],2700,"smartPhone",false,false));
-        productList.add(new Product("Blackberry Passport",smartphoneImageURL[7],2100,"smartPhone",false,false));
+        productList.add(new Product("Samsung Note9 64GB",smartphoneImageURL[0],2890,"smartPhone",0,0));
+        productList.add(new Product("Samsung S8 128GB",smartphoneImageURL[1],2200,"smartPhone",0,0));
+        productList.add(new Product("Huawei Mate 20 pro 256GB",smartphoneImageURL[2],2600,"smartPhone",0,0));
+        productList.add(new Product("Asus Zenfone 64GB",smartphoneImageURL[3],1400 ,"smartPhone",0,0));
+        productList.add(new Product("Apple Iphone Xsmax 256GB ",smartphoneImageURL[4],3300,"smartPhone",0,0));
+        productList.add(new Product("Apple Iphone 8 128GB",smartphoneImageURL[5],2090,"smartPhone",0,0));
+        productList.add(new Product("Blackberry Priv",smartphoneImageURL[6],2700,"smartPhone",0,0));
+        productList.add(new Product("Blackberry Passport",smartphoneImageURL[7],2100,"smartPhone",0,0));
 
         adapterHomeProducts = new RecyclerHomeProductAdapter(productList,getActivity());
         recyclerView_smartphones.setAdapter(adapterHomeProducts);
+
+        databaseHelper.insertProducts(productList);
         return  view;
     }
 

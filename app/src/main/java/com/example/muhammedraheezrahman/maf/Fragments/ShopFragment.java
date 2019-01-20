@@ -1,14 +1,23 @@
 package com.example.muhammedraheezrahman.maf.Fragments;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.muhammedraheezrahman.maf.Adapter.RecyclerHomeProductAdapter;
+import com.example.muhammedraheezrahman.maf.Database.DatabaseHelper;
+import com.example.muhammedraheezrahman.maf.Model.Product;
 import com.example.muhammedraheezrahman.maf.R;
+
+import java.util.List;
 
 
 /**
@@ -25,6 +34,11 @@ public class ShopFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int a = 1;
+    private RecyclerView recyclerView;
+    private GridLayoutManager linearLayoutManager;
+    private List<Product> productsList;
+    private DatabaseHelper databaseHelper;
+    private RecyclerHomeProductAdapter adapter;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -67,7 +81,16 @@ public class ShopFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shop, container, false);
+        View view =  inflater.inflate(R.layout.fragment_shop, container, false);
+        databaseHelper = new DatabaseHelper(getActivity());
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv);
+        linearLayoutManager = new GridLayoutManager(getActivity(),2,LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        productsList = databaseHelper.getProducts();
+        adapter = new RecyclerHomeProductAdapter(productsList,getActivity());
+        recyclerView.setAdapter(adapter);
+        return  view;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

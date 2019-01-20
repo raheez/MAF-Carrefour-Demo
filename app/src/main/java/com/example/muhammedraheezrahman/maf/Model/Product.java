@@ -9,14 +9,15 @@ public class Product {
     String category;
     int addedToWishList;
     int addedToCart;
+    int id;
 
 
-    private static final String COLUMN_ID = "id";
-    private static final String COLUMN_TITLE = "title";
-    private static final String COLUMN_IMAGE = "image";
-    private static final String COLUMN_PRICE = "price";
-    private static final String COLUMN_CATEGORY = "category";
-    private static final String COLUMN_ADDEDTOCART = "addedToCart";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_TITLE = "title";
+    public static final String COLUMN_IMAGE = "image";
+    public static final String COLUMN_PRICE = "price";
+    public static final String COLUMN_CATEGORY = "category";
+    public static final String COLUMN_ADDEDTOCART = "addedToCart";
 
     public static final String TABLE_NAME = "product";
 
@@ -29,6 +30,9 @@ public class Product {
                 + COLUMN_ADDEDTOCART + " INTEGER"
             + " )";
 
+    public Product() {
+    }
+
     public Product(String title, String imageURL, float price, String category, int addedToWishList, int addedToCart) {
         this.title = title;
         this.imageURL = imageURL;
@@ -38,9 +42,19 @@ public class Product {
         this.addedToCart = addedToCart;
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
+
 
     public void setTitle(String title) {
         this.title = title;
