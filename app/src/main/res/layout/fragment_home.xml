@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/electronicsTitle"
                 android:layout_below="@id/rv_categories"
-                android:text="Shop Electronics"
+                android:text="Shop Electronics and others"
                 android:textSize="20sp"
                 android:fontFamily="sans-serif-medium"
                 android:textStyle="bold"
