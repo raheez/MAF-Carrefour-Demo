@@ -10,25 +10,21 @@
         android:layout_centerVertical="true"
         android:layout_alignWithParentIfMissing="true"
         card_view:cardUseCompatPadding="true"
-        card_view:cardElevation="8dp"
-        card_view:cardCornerRadius="6dp"
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
+        card_view:cardElevation="5dp"
+        card_view:cardCornerRadius="4dp"
         >
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:backgroundTint="@color/white">
+            android:background="@drawable/edge_color">
 
             <ImageView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp"
                 android:id="@+id/imageView"
-                android:scaleType="fitXY"
 
                 />
 
@@ -46,9 +42,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/productPriceTv"
                 android:layout_below="@id/productTitleTv"
+                android:layout_marginBottom="10dp"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/black"
-                android:layout_marginBottom="10dp"
                 android:fontFamily="sans-serif-medium"/>
 
             <Button
@@ -58,8 +54,8 @@
                 android:text="ADD"
                 android:layout_below="@id/productPriceTv"
                 android:background="@color/colorAccent"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginBottom="20dp"/>
 
         </RelativeLayout>

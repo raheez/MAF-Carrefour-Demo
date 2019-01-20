@@ -67,6 +67,28 @@
 
             </android.support.v7.widget.RecyclerView>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/smartphoneTitle"
+                android:layout_below="@id/rv_electronics"
+                android:text="SmartPhones"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_smartPhone"
+                android:layout_below="@id/smartphoneTitle"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp">
+
+            </android.support.v7.widget.RecyclerView>
+
 
         </RelativeLayout>
     </ScrollView>

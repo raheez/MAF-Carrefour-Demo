@@ -17,8 +17,12 @@ import android.widget.LinearLayout;
 
 import com.example.muhammedraheezrahman.maf.Adapter.CustomPagerAdapter;
 import com.example.muhammedraheezrahman.maf.Adapter.RecyclerHomeAdapter;
+import com.example.muhammedraheezrahman.maf.Adapter.RecyclerHomeProductAdapter;
+import com.example.muhammedraheezrahman.maf.Model.Product;
 import com.example.muhammedraheezrahman.maf.R;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -45,10 +49,13 @@ public class HomeFragment extends Fragment {
     private  int NO_OF_PAGE = 0;
     private RecyclerHomeAdapter adapter_categories;
     private RecyclerHomeAdapter adapter_electronics;
+    private RecyclerHomeProductAdapter adapterHomeProducts;
     private RecyclerView recyclerView_categories;
     private RecyclerView recyclerView_electronics;
+    private RecyclerView recyclerView_smartphones;
     private LinearLayoutManager linearLayoutManager_categories;
     private LinearLayoutManager linearLayoutManager_electronics;
+    private LinearLayoutManager linearLayoutManager_smartPhones;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -101,13 +108,16 @@ public class HomeFragment extends Fragment {
 
         recyclerView_categories = (RecyclerView) view.findViewById(R.id.rv_categories);
         recyclerView_electronics = (RecyclerView) view.findViewById(R.id.rv_electronics);
+        recyclerView_smartphones= (RecyclerView) view.findViewById(R.id.rv_smartPhone);
         linearLayoutManager_categories = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         linearLayoutManager_electronics = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        linearLayoutManager_smartPhones = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
 
 
 //        recyclerView_electronics.setLayoutManager(linearLayoutManager);
         recyclerView_categories.setLayoutManager(linearLayoutManager_categories);
         recyclerView_electronics.setLayoutManager(linearLayoutManager_electronics);
+        recyclerView_smartphones.setLayoutManager(linearLayoutManager_smartPhones);
 
         NO_OF_PAGE = urlImageSlider.length;
 
@@ -135,25 +145,46 @@ public class HomeFragment extends Fragment {
             }
         },DELAY_TIME,PERIOD_TIME);
 
-
+        //categories recycler View
         String CategoriesImages[] = new String[]{"https://image.shutterstock.com/z/stock-photo-close-up-of-salmon-steak-with-fresh-ingredients-for-tasty-cooking-on-rustic-wooden-background-380419306.jpg"
                                                  ,"https://image.shutterstock.com/z/stock-photo-shopping-groceries-bags-759471532.jpg"
                                                  ,"https://image.shutterstock.com/z/stock-photo-flat-lay-photo-baby-stuff-sponge-yellow-liquid-soap-package-blue-shampoo-bottle-pink-shower-gel-1074999122.jpg"
                                                     };
         String categoriesTitles[] = new String[]{"Fresh Food","Groceries","Baby World"};
+        adapter_categories = new RecyclerHomeAdapter(getActivity().getApplicationContext(),CategoriesImages,categoriesTitles);
+        recyclerView_categories.setAdapter(adapter_categories);
 
-
+        //electronics recycler View
         String electronicsImages[] = new String[]{"https://image.shutterstock.com/image-photo/electronic-circuit-board-close-up-450w-1242399118.jpg"
                                                     ,"http://keralaonlinechannel.com/upload/images/5bt4k4.jpg"
                                                     ,"https://qalebfa.com/wp-content/uploads/wooden-royal-sofa-couch-3-seater-teak-wood-white-home-furniture.jpg"};
-
         String electonicsTitles[] = new String[]{"Electonics","Home Appliances","Home furniture"};
-
-        adapter_categories = new RecyclerHomeAdapter(getActivity().getApplicationContext(),CategoriesImages,categoriesTitles);
         adapter_electronics = new RecyclerHomeAdapter(getActivity().getApplicationContext(),electronicsImages,electonicsTitles);
-
-        recyclerView_categories.setAdapter(adapter_categories);
         recyclerView_electronics.setAdapter(adapter_electronics);
+
+
+        //Mobiles recycler View
+
+        String smartphoneImageURL[] = new String[]{"https://cdn.vox-cdn.com/thumbor/3kLqQ-F8ldNtSKXtSJKXabx0RGg=/0x0:705x470/1200x800/filters:focal(297x179:409x291)/cdn.vox-cdn.com/uploads/chorus_image/image/61477359/galaxy_a7_main_1.0.jpg"
+                                                    ,"https://images.sellbrite.com/production/14465/SAM-G892U_64-GRY-TMOB-9/668e6064-1586-552c-b321-a00f1f1bac1f.jpg"
+                                                    ,"http://www.three.co.uk/static/images/device_pages/MobileVersion/Huawei/Mate_20_Pro/Black/desktop/1.jpg"
+                                                    ,"https://i.gadgets360cdn.com/large/asus_zenfone_max_pro_m1_1525410691515.jpg"
+                                                    ,"https://www.jarir.com/media/catalog/product/cache/1/image/400x400/9df78eab33525d08d6e5fb8d27136e95/5/1/513984.jpg"
+                                                    ,"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone8/plus/iphone8-plus-silver-select-2018?wid=513&hei=556&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1522347733364"
+                                                    ,"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/BlackBerry-Priv.jpg/1200px-BlackBerry-Priv.jpg"
+                                                    ,"https://photos.dialcom.lk/big/items/-passport-mobile-phones-price-in-sri-lanka_374_jpg"};
+        List<Product> productList = new ArrayList<>();
+        productList.add(new Product("Samsung Note9 64GB",smartphoneImageURL[0],2890,"smartPhone",false,false));
+        productList.add(new Product("Samsung S8 128GB",smartphoneImageURL[1],2200,"smartPhone",false,false));
+        productList.add(new Product("Huawei Mate 20 pro 256GB",smartphoneImageURL[2],2600,"smartPhone",false,false));
+        productList.add(new Product("Asus Zenfone 64GB",smartphoneImageURL[3],1400 ,"smartPhone",false,false));
+        productList.add(new Product("Apple Iphone Xsmax 256GB ",smartphoneImageURL[4],3300,"smartPhone",false,false));
+        productList.add(new Product("Apple Iphone 8 128GB",smartphoneImageURL[5],2090,"smartPhone",false,false));
+        productList.add(new Product("Blackberry Priv",smartphoneImageURL[6],2700,"smartPhone",false,false));
+        productList.add(new Product("Blackberry Passport",smartphoneImageURL[7],2100,"smartPhone",false,false));
+
+        adapterHomeProducts = new RecyclerHomeProductAdapter(productList,getActivity());
+        recyclerView_smartphones.setAdapter(adapterHomeProducts);
         return  view;
     }
 
