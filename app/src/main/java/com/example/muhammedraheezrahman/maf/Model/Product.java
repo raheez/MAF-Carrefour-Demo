@@ -7,10 +7,29 @@ public class Product {
     String imageURL;
     float price;
     String category;
-    boolean addedToWishList;
-    boolean addedToCart;
+    int addedToWishList;
+    int addedToCart;
 
-    public Product(String title, String imageURL, float price, String category, boolean addedToWishList, boolean addedToCart) {
+
+    private static final String COLUMN_ID = "id";
+    private static final String COLUMN_TITLE = "title";
+    private static final String COLUMN_IMAGE = "image";
+    private static final String COLUMN_PRICE = "price";
+    private static final String COLUMN_CATEGORY = "category";
+    private static final String COLUMN_ADDEDTOCART = "addedToCart";
+
+    public static final String TABLE_NAME = "product";
+
+    public static final String CREATE_TABLE = "CREATE TABLE "+ TABLE_NAME + " ("
+                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_TITLE + " TEXT,"
+                + COLUMN_IMAGE + " TEXT,"
+                + COLUMN_PRICE + " REAL,"
+                + COLUMN_CATEGORY + " TEXT,"
+                + COLUMN_ADDEDTOCART + " INTEGER"
+            + " )";
+
+    public Product(String title, String imageURL, float price, String category, int addedToWishList, int addedToCart) {
         this.title = title;
         this.imageURL = imageURL;
         this.price = price;
@@ -51,19 +70,19 @@ public class Product {
         this.category = category;
     }
 
-    public boolean isAddedToWishList() {
+    public int isAddedToWishList() {
         return addedToWishList;
     }
 
-    public void setAddedToWishList(boolean addedToWishList) {
+    public void setAddedToWishList(int addedToWishList) {
         this.addedToWishList = addedToWishList;
     }
 
-    public boolean isAddedToCart() {
+    public int isAddedToCart() {
         return addedToCart;
     }
 
-    public void setAddedToCart(boolean addedToCart) {
+    public void setAddedToCart(int addedToCart) {
         this.addedToCart = addedToCart;
     }
 }
