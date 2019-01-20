@@ -7,16 +7,18 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
-import com.example.muhammedraheezrahman.maf.CustomPagerAdapter;
+import com.example.muhammedraheezrahman.maf.Adapter.CustomPagerAdapter;
+import com.example.muhammedraheezrahman.maf.Adapter.RecyclerHomeAdapter;
 import com.example.muhammedraheezrahman.maf.R;
 
-import java.sql.Time;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,9 +40,15 @@ public class HomeFragment extends Fragment {
     private ImageView imageView;
     private Timer timer;
     private final long DELAY_TIME = 500;
-    private final long PERIOD_TIME = 2000;
+    private final long PERIOD_TIME = 2500;
     private  int CURRENT_PAGE = 0;
     private  int NO_OF_PAGE = 0;
+    private RecyclerHomeAdapter adapter_categories;
+    private RecyclerHomeAdapter adapter_electronics;
+    private RecyclerView recyclerView_categories;
+    private RecyclerView recyclerView_electronics;
+    private LinearLayoutManager linearLayoutManager_categories;
+    private LinearLayoutManager linearLayoutManager_electronics;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -85,16 +93,26 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view =  inflater.inflate(R.layout.fragment_home, container, false);
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        imageView = (ImageView) view.findViewById(R.id.imageView);
-        String url[] = new String[]{"https://image.shutterstock.com/z/stock-vector-vector-sale-faceted-d-banner-poster-colorful-illustration-572608936.jpg"
-                                    ,"https://image.shutterstock.com/image-vector/sale-banner-template-design-big-450w-1005958072.jpg"
+        String urlImageSlider[] = new String[]{"https://image.shutterstock.com/image-vector/sale-banner-template-design-big-450w-1005958072.jpg"
+                                    ,"https://image.shutterstock.com/z/stock-vector-vector-sale-faceted-d-banner-poster-colorful-illustration-572608936.jpg"
                                     ,"https://image.shutterstock.com/image-vector/bright-sale-banner-design-vector-450w-730408768.jpg"
                                     ,"https://image.shutterstock.com/image-photo/sale-concept-collection-female-shoes-450w-455544916.jpg"
                                     ,"https://image.shutterstock.com/image-vector/sale-poster-shopping-bag-450w-606454742.jpg"};
-        NO_OF_PAGE = url.length;
 
-        PagerAdapter adapter = new CustomPagerAdapter(url,getActivity());
-        viewPager.setAdapter(adapter);
+        recyclerView_categories = (RecyclerView) view.findViewById(R.id.rv_categories);
+        recyclerView_electronics = (RecyclerView) view.findViewById(R.id.rv_electronics);
+        linearLayoutManager_categories = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        linearLayoutManager_electronics = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+
+
+//        recyclerView_electronics.setLayoutManager(linearLayoutManager);
+        recyclerView_categories.setLayoutManager(linearLayoutManager_categories);
+        recyclerView_electronics.setLayoutManager(linearLayoutManager_electronics);
+
+        NO_OF_PAGE = urlImageSlider.length;
+
+        PagerAdapter pagerAdapter = new CustomPagerAdapter(urlImageSlider,getActivity());
+        viewPager.setAdapter(pagerAdapter);
 
         final Handler handler = new Handler();
         final Runnable update = new Runnable() {
@@ -117,6 +135,25 @@ public class HomeFragment extends Fragment {
             }
         },DELAY_TIME,PERIOD_TIME);
 
+
+        String CategoriesImages[] = new String[]{"https://image.shutterstock.com/z/stock-photo-close-up-of-salmon-steak-with-fresh-ingredients-for-tasty-cooking-on-rustic-wooden-background-380419306.jpg"
+                                                 ,"https://image.shutterstock.com/z/stock-photo-shopping-groceries-bags-759471532.jpg"
+                                                 ,"https://image.shutterstock.com/z/stock-photo-flat-lay-photo-baby-stuff-sponge-yellow-liquid-soap-package-blue-shampoo-bottle-pink-shower-gel-1074999122.jpg"
+                                                    };
+        String categoriesTitles[] = new String[]{"Fresh Food","Groceries","Baby World"};
+
+
+        String electronicsImages[] = new String[]{"https://image.shutterstock.com/image-photo/electronic-circuit-board-close-up-450w-1242399118.jpg"
+                                                    ,"http://keralaonlinechannel.com/upload/images/5bt4k4.jpg"
+                                                    ,"https://qalebfa.com/wp-content/uploads/wooden-royal-sofa-couch-3-seater-teak-wood-white-home-furniture.jpg"};
+
+        String electonicsTitles[] = new String[]{"Electonics","Home Appliances","Home furniture"};
+
+        adapter_categories = new RecyclerHomeAdapter(getActivity().getApplicationContext(),CategoriesImages,categoriesTitles);
+        adapter_electronics = new RecyclerHomeAdapter(getActivity().getApplicationContext(),electronicsImages,electonicsTitles);
+
+        recyclerView_categories.setAdapter(adapter_categories);
+        recyclerView_electronics.setAdapter(adapter_electronics);
         return  view;
     }
 
@@ -142,6 +179,7 @@ public class HomeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+
     }
 
     @Override
@@ -151,6 +189,26 @@ public class HomeFragment extends Fragment {
             mListener.changeBottomNavSelection(R.id.navigation_home);
         }
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        timer.cancel();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        timer.cancel();
     }
 
     /**

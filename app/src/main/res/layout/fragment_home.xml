@@ -6,24 +6,72 @@
     tools:context=".Fragments.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
-
-    <android.support.v4.view.ViewPager
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:id="@+id/viewpager"
-        ></android.support.v4.view.ViewPager>
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="fitXY"
-        android:id="@+id/imageView"/>
+        <RelativeLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants">
+
+            <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/viewpager"
+                ></android.support.v4.view.ViewPager>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/categoriesTitle"
+                android:layout_below="@id/viewpager"
+                android:text="Shop Categories"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/rv_categories"
+                android:layout_below="@id/categoriesTitle"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/electronicsTitle"
+                android:layout_below="@id/rv_categories"
+                android:text="Shop Electronics"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/rv_electronics"
+                android:layout_below="@id/electronicsTitle"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
 
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.muhammedraheezrahman.maf;
+package com.example.muhammedraheezrahman.maf.Adapter;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.muhammedraheezrahman.maf.R;
 
 public class CustomPagerAdapter extends PagerAdapter {
     private String[] imageList;
