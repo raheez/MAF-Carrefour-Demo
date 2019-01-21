@@ -1,7 +1,6 @@
 package com.example.muhammedraheezrahman.maf.Fragments;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,8 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.example.muhammedraheezrahman.maf.Adapter.RecyclerHomeProductAdapter;
+import com.example.muhammedraheezrahman.maf.Adapter.RecyclerProductAdapter;
 import com.example.muhammedraheezrahman.maf.Database.DatabaseHelper;
 import com.example.muhammedraheezrahman.maf.Model.Product;
 import com.example.muhammedraheezrahman.maf.R;
@@ -28,7 +28,7 @@ import java.util.List;
  * Use the {@link ShopFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ShopFragment extends Fragment {
+public class ShopFragment extends Fragment implements RecyclerProductAdapter.ItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,7 +38,7 @@ public class ShopFragment extends Fragment {
     private GridLayoutManager linearLayoutManager;
     private List<Product> productsList;
     private DatabaseHelper databaseHelper;
-    private RecyclerHomeProductAdapter adapter;
+    private RecyclerProductAdapter adapter;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -87,7 +87,7 @@ public class ShopFragment extends Fragment {
         linearLayoutManager = new GridLayoutManager(getActivity(),2,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
         productsList = databaseHelper.getProducts();
-        adapter = new RecyclerHomeProductAdapter(productsList,getActivity());
+        adapter = new RecyclerProductAdapter(productsList,getActivity(),this);
         recyclerView.setAdapter(adapter);
         return  view;
 
@@ -123,6 +123,12 @@ public class ShopFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void addToCart(int id) {
+        databaseHelper.addToCart(id);
+        Toast.makeText(getActivity().getApplicationContext(),"ID is "+ id,Toast.LENGTH_SHORT).show();
     }
 
     /**

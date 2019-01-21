@@ -1,7 +1,6 @@
 package com.example.muhammedraheezrahman.maf.Fragments;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,11 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.muhammedraheezrahman.maf.Adapter.CustomPagerAdapter;
 import com.example.muhammedraheezrahman.maf.Adapter.RecyclerHomeAdapter;
-import com.example.muhammedraheezrahman.maf.Adapter.RecyclerHomeProductAdapter;
+import com.example.muhammedraheezrahman.maf.Adapter.RecyclerProductAdapter;
 import com.example.muhammedraheezrahman.maf.Database.DatabaseHelper;
 import com.example.muhammedraheezrahman.maf.Model.Product;
 import com.example.muhammedraheezrahman.maf.R;
@@ -37,7 +36,7 @@ import java.util.TimerTask;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements RecyclerProductAdapter.ItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -51,7 +50,7 @@ public class HomeFragment extends Fragment {
     private  int NO_OF_PAGE = 0;
     private RecyclerHomeAdapter adapter_categories;
     private RecyclerHomeAdapter adapter_electronics;
-    private RecyclerHomeProductAdapter adapterHomeProducts;
+    private RecyclerProductAdapter adapterHomeProducts;
     private RecyclerView recyclerView_categories;
     private RecyclerView recyclerView_electronics;
     private RecyclerView recyclerView_smartphones;
@@ -179,19 +178,12 @@ public class HomeFragment extends Fragment {
                                                     ,"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/BlackBerry-Priv.jpg/1200px-BlackBerry-Priv.jpg"
                                                     ,"https://photos.dialcom.lk/big/items/-passport-mobile-phones-price-in-sri-lanka_374_jpg"};
         List<Product> productList = new ArrayList<>();
-        productList.add(new Product("Samsung Note9 64GB",smartphoneImageURL[0],2890,"smartPhone",0,0));
-        productList.add(new Product("Samsung S8 128GB",smartphoneImageURL[1],2200,"smartPhone",0,0));
-        productList.add(new Product("Huawei Mate 20 pro 256GB",smartphoneImageURL[2],2600,"smartPhone",0,0));
-        productList.add(new Product("Asus Zenfone 64GB",smartphoneImageURL[3],1400 ,"smartPhone",0,0));
-        productList.add(new Product("Apple Iphone Xsmax 256GB ",smartphoneImageURL[4],3300,"smartPhone",0,0));
-        productList.add(new Product("Apple Iphone 8 128GB",smartphoneImageURL[5],2090,"smartPhone",0,0));
-        productList.add(new Product("Blackberry Priv",smartphoneImageURL[6],2700,"smartPhone",0,0));
-        productList.add(new Product("Blackberry Passport",smartphoneImageURL[7],2100,"smartPhone",0,0));
-
-        adapterHomeProducts = new RecyclerHomeProductAdapter(productList,getActivity());
+        productList = databaseHelper.getProducts();
+        adapterHomeProducts = new RecyclerProductAdapter(productList,getActivity(),this);
         recyclerView_smartphones.setAdapter(adapterHomeProducts);
 
-        databaseHelper.insertProducts(productList);
+
+
         return  view;
     }
 
@@ -229,6 +221,7 @@ public class HomeFragment extends Fragment {
 
     }
 
+
     @Override
     public void onStop() {
         super.onStop();
@@ -247,6 +240,12 @@ public class HomeFragment extends Fragment {
     public void onPause() {
         super.onPause();
         timer.cancel();
+    }
+
+    @Override
+    public void addToCart(int id) {
+        databaseHelper.addToCart(id);
+        Toast.makeText(getActivity().getApplicationContext(),"the id is" +id,Toast.LENGTH_SHORT).show();
     }
 
     /**

@@ -33,6 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void insertProducts(List<Product> list){
+        deleteItems();
         SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -46,6 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             long id = database.insert(Product.TABLE_NAME,null,values);
         }
 
+        database.close();
     }
 
     public List<Product> getProducts(){
@@ -70,6 +72,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }while (cursor.moveToNext());
 
         }
+        database.close();
+        return productList;
+    }
+
+
+
+    public void deleteItems(){
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.execSQL("DELETE FROM "+Product.TABLE_NAME);
+        database.close();
+    }
+
+    public void addToCart(int id){
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Product.COLUMN_ADDEDTOCART,1);
+         database.update(Product.TABLE_NAME,contentValues,Product.COLUMN_ID + " = ?",
+                new String[]{String.valueOf(id)});
+         database.close();
+    }
+
+    public List<Product> getProductsInCart(){
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        Cursor cursor = database.query(Product.TABLE_NAME,new String[]{Product.COLUMN_TITLE,Product.COLUMN_PRICE,Product.COLUMN_ADDEDTOCART,
+                                                                        Product.COLUMN_IMAGE,Product.COLUMN_CATEGORY,Product.COLUMN_ID},Product.COLUMN_ADDEDTOCART + " = ?",new String[]{String.valueOf(1)},null,null,null,null);
+        List<Product> productList = new ArrayList<>();
+        if (cursor.moveToFirst()){
+            do{
+
+                Product product = new Product();
+                product.setTitle(cursor.getString(cursor.getColumnIndex(Product.COLUMN_TITLE)));
+                product.setCategory(cursor.getString(cursor.getColumnIndex(Product.COLUMN_CATEGORY)));
+                product.setImageURL(cursor.getString(cursor.getColumnIndex(Product.COLUMN_IMAGE)));
+                product.setPrice(cursor.getFloat(cursor.getColumnIndex(Product.COLUMN_PRICE)));
+                product.setAddedToCart(cursor.getInt(cursor.getColumnIndex(Product.COLUMN_ADDEDTOCART)));
+                product.setId(cursor.getInt(cursor.getColumnIndex(Product.COLUMN_ID)));
+                productList.add(product);
+
+            }while (cursor.moveToNext());
+
+        }
+        database.close();
         return productList;
     }
 }

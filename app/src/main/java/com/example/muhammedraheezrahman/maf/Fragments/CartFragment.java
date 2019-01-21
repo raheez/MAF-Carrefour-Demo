@@ -4,11 +4,19 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.muhammedraheezrahman.maf.Adapter.RecyclerProductAdapter;
+import com.example.muhammedraheezrahman.maf.Database.DatabaseHelper;
+import com.example.muhammedraheezrahman.maf.Model.Product;
 import com.example.muhammedraheezrahman.maf.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -19,17 +27,21 @@ import com.example.muhammedraheezrahman.maf.R;
  * Use the {@link CartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment  implements RecyclerProductAdapter.ItemClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private RecyclerView recyclerView;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private LinearLayoutManager linearLayoutManager;
+    private RecyclerProductAdapter adapter;
+    private List<Product> productList;
+    private DatabaseHelper databaseHelper;
 
     public CartFragment() {
         // Required empty public constructor
@@ -66,7 +78,17 @@ public class CartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false);
+        View view =  inflater.inflate(R.layout.fragment_cart, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_cart);
+        databaseHelper = new DatabaseHelper(getActivity().getApplicationContext());
+        linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        productList = new ArrayList<>();
+        productList = databaseHelper.getProductsInCart();
+        adapter = new RecyclerProductAdapter(productList,getActivity().getApplicationContext(),this);
+        recyclerView.setAdapter(adapter);
+
+        return  view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -100,6 +122,11 @@ public class CartFragment extends Fragment {
         if (mListener != null) {
             mListener.changeBottomNavSelection(R.id.navigation_cart);
         }
+    }
+
+    @Override
+    public void addToCart(int id) {
+
     }
 
     /**
