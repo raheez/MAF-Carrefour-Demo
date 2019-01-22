@@ -6,12 +6,68 @@
     tools:context=".Fragments.CartFragment">
 
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/billing_layout"
+        android:elevation="8dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/lightgrey">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/grand_total_title_tv"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="Grant Total"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5334 AED"
+            android:id="@+id/grnad_amount_tv"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/grand_total_title_tv"
+            android:layout_marginLeft="20dp"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            />
+
+        <Button
+            android:id="@+id/checkoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:text="Checkout"
+            android:layout_marginLeft="150dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toRightOf="@id/grand_total_title_tv"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"/>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/grey"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+
+
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/rv_cart"
+        android:layout_above="@id/billing_layout"
         >
 
     </android.support.v7.widget.RecyclerView>
+
 
 </RelativeLayout>

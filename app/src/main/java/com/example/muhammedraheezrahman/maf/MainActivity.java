@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.muhammedraheezrahman.maf.Adapter.RecyclerProductAdapter;
 import com.example.muhammedraheezrahman.maf.Database.DatabaseHelper;
 import com.example.muhammedraheezrahman.maf.Fragments.CartFragment;
 import com.example.muhammedraheezrahman.maf.Fragments.HomeFragment;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
         setContentView(R.layout.activity_main);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNav);
 
-        addBadgeView();
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -106,9 +107,12 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
         fragmentTransaction.commit();
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
+
+    @Override
+    public void onFragmentInteraction() {
+        int number = databaseHelper.getProductsInCart().size();
+        addBadgeView(number);
     }
 
     @Override
@@ -118,17 +122,24 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
     }
 
 
-    private void addBadgeView() {
+    private void addBadgeView(int number) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
         BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(2);
 
         notificationBadge = LayoutInflater.from(this).inflate(R.layout.badge_bottom_nav, menuView, false);
 
         notificationNo = (TextView) notificationBadge.findViewById(R.id.notificationsTv);
+        bottomNavigationView.refreshDrawableState();
 
-        itemView.addView(notificationBadge);
-        notificationNo.setText(" "+String.valueOf(5)+" ");
+        if (number!=0){
+
+            itemView.addView(notificationBadge);
+            notificationNo.setText(" "+String.valueOf(number)+" ");
+
+        }
+
 
     }
+
 
 }

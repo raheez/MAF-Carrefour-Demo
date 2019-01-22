@@ -45,11 +45,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:itemBackground="@color/lightgrey"
+        app:itemBackground="@color/whitesmoke"
         app:itemIconTint="@drawable/nav_bar"
         app:itemTextColor="@drawable/nav_bar"
         app:menu="@menu/navigation"
         android:enabled="true"
+        app:elevation="12dp"
         >
 
 

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.muhammedraheezrahman.maf.Adapter.RecyclerCartAdapter;
 import com.example.muhammedraheezrahman.maf.Adapter.RecyclerProductAdapter;
 import com.example.muhammedraheezrahman.maf.Database.DatabaseHelper;
 import com.example.muhammedraheezrahman.maf.Model.Product;
@@ -27,7 +28,7 @@ import java.util.List;
  * Use the {@link CartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CartFragment extends Fragment  implements RecyclerProductAdapter.ItemClickListener{
+public class CartFragment extends Fragment  implements RecyclerCartAdapter.CartItemClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,7 +40,7 @@ public class CartFragment extends Fragment  implements RecyclerProductAdapter.It
 
     private OnFragmentInteractionListener mListener;
     private LinearLayoutManager linearLayoutManager;
-    private RecyclerProductAdapter adapter;
+    private RecyclerCartAdapter adapter;
     private List<Product> productList;
     private DatabaseHelper databaseHelper;
 
@@ -85,7 +86,7 @@ public class CartFragment extends Fragment  implements RecyclerProductAdapter.It
         recyclerView.setLayoutManager(linearLayoutManager);
         productList = new ArrayList<>();
         productList = databaseHelper.getProductsInCart();
-        adapter = new RecyclerProductAdapter(productList,getActivity().getApplicationContext(),this);
+        adapter = new RecyclerCartAdapter(productList,getActivity(),this);
         recyclerView.setAdapter(adapter);
 
         return  view;
@@ -94,7 +95,7 @@ public class CartFragment extends Fragment  implements RecyclerProductAdapter.It
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction();
         }
     }
 
@@ -141,7 +142,7 @@ public class CartFragment extends Fragment  implements RecyclerProductAdapter.It
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction();
         void changeBottomNavSelection(int menuItem);
 
     }
