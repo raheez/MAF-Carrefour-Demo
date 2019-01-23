@@ -175,7 +175,7 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
         String electonicsTitles[] = new String[]{"Electonics","Home Appliances","Home furniture"};
 
         electonicsTitlesList = new ArrayList<>();
-        electonicsTitlesList.add("Electonics");
+        electonicsTitlesList.add("Electronics");
         electonicsTitlesList.add("Home Appliances");
         electonicsTitlesList.add("Home furniture");
 
@@ -196,7 +196,7 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
                                                     ,"https://photos.dialcom.lk/big/items/-passport-mobile-phones-price-in-sri-lanka_374_jpg"};
 
         List<Product> productList = new ArrayList<>();
-        productList = databaseHelper.getProducts();
+        productList = databaseHelper.getProductsByCategory("smartPhone");
         adapterHomeProducts = new RecyclerProductAdapter(productList,getActivity(),this);
         recyclerView_smartphones.setAdapter(adapterHomeProducts);
 

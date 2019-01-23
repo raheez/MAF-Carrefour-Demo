@@ -109,6 +109,12 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
                 ,"https://i-cdn.phonearena.com/images/phones/49346-xlarge/BlackBerry-Passport-1.jpg"
                 ,"https://image.shutterstock.com/image-photo/close-white-beauty-cream-yogurt-450w-129400175.jpg"
                 ,"https://image.shutterstock.com/image-photo/market-packed-dates-450w-108316640.jpg"
+                ,"https://image.shutterstock.com/image-photo/bucharest-romania-july-4-2016-450w-447916327.jpg"
+                ,"https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/image/AppleInc/aos/published/images/M/BP/MBP15G/201807/MBP15G-201807?wid=324&hei=324&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1531249595742"
+                ,"https://image.shutterstock.com/image-photo/patchwork-armchair-chair-modern-designer-450w-585453341.jpg"
+                ,"https://image.shutterstock.com/image-photo/upholstered-wingback-accent-wing-chair-450w-1108098191.jpg"
+                ,"https://www.lg.com/in/images/washing-machines/md05834452/gallery/FH0H3NDNL02_large1.jpg"
+                ,"https://image.shutterstock.com/image-photo/healthy-food-background-paper-bag-450w-756860899.jpg"
         };
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
@@ -124,6 +130,12 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
         productList.add(new Product("Galic paste",smartphoneImageURL[8],6,"Fresh Food",0,0));
         productList.add(new Product("Blackberry Passport",smartphoneImageURL[7],2100,"smartPhone",0,0));
         productList.add(new Product(" Saudi Dates",smartphoneImageURL[9],31,"Fresh Food",0,0));
+        productList.add(new Product(" Baby Pampers",smartphoneImageURL[10],14,"Baby World",0,0));
+        productList.add(new Product(" Apple Mac Book Pro 256GB",smartphoneImageURL[11],14,"Electronics ",0,0));
+        productList.add(new Product(" Chair Mixed Color",smartphoneImageURL[12],193,"Home Furniture ",0,0));
+        productList.add(new Product(" Sofa Chair Green",smartphoneImageURL[13],180,"Home Furniture ",0,0));
+        productList.add(new Product(" LG Washing machine",smartphoneImageURL[14],280,"Home Appliances",0,0));
+        productList.add(new Product(" Vegitables Pack",smartphoneImageURL[15],17,"Groceries",0,0));
 
         databaseHelper.insertProducts(productList);
 
