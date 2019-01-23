@@ -1,5 +1,6 @@
 package com.example.muhammedraheezrahman.maf;
 
+import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -9,9 +10,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.muhammedraheezrahman.maf.Adapter.RecyclerProductAdapter;
@@ -30,14 +36,35 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
     private TextView notificationNo;
     private View notificationBadge;
     private DatabaseHelper databaseHelper;
+    private RelativeLayout searchLayout;
+    private EditText searchTv;
+    private TextView welcometitleTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNav);
+        searchLayout = (RelativeLayout) findViewById(R.id.search_layout);
+        searchTv = (EditText) findViewById(R.id.searchEt);
+        welcometitleTv = (TextView) findViewById(R.id.welcomeTv);
 
+        searchTv.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH){
 
+                    ShopFragment fragment = new ShopFragment();
+
+                    loadFragments(fragment.newInstance(searchTv.getText().toString(),null));
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(searchTv.getWindowToken(), 0);
+
+                }
+                return false;
+            }
+
+        });
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -86,7 +113,7 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
         productList.add(new Product("Apple Iphone Xsmax 256GB ",smartphoneImageURL[4],3300,"smartPhone",0,0));
         productList.add(new Product("Apple Iphone 8 128GB",smartphoneImageURL[5],2090,"smartPhone",0,0));
         productList.add(new Product("Blackberry Priv",smartphoneImageURL[6],2700,"smartPhone",0,0));
-        productList.add(new Product("Blackberry Passport",smartphoneImageURL[7],2100,"smartPhone",0,0));
+        productList.add(new Product("Blackberry Passport",smartphoneImageURL[7],2100,"Mobile",0,0));
 
         databaseHelper.insertProducts(productList);
 
@@ -116,8 +143,18 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
     }
 
     @Override
-    public void changeBottomNavSelection(int a) {
-        bottomNavigationView.getMenu().findItem(a).setChecked(true);
+    public void changeBottomNavSelectionCartFragment(int menuItem) {
+        bottomNavigationView.getMenu().findItem(menuItem).setChecked(true);
+        searchLayout.setVisibility(View.GONE);
+        welcometitleTv.setText(String.valueOf("CART"));
+
+    }
+
+    @Override
+    public void changeBottomNavSelection(int menuItem) {
+        bottomNavigationView.getMenu().findItem(menuItem).setChecked(true);
+        welcometitleTv.setText(String.valueOf("Hi,Welcome to Carrefour!"));
+        searchLayout.setVisibility(View.VISIBLE);
 
     }
 

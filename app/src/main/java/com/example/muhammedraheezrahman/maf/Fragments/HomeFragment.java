@@ -245,7 +245,6 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
     @Override
     public void addToCart(int id) {
         databaseHelper.addToCart(id);
-        Toast.makeText(getActivity().getApplicationContext(),"the id is" +id,Toast.LENGTH_SHORT).show();
         if (mListener != null) {
             mListener.onFragmentInteraction();
         }

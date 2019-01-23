@@ -68,6 +68,8 @@ public class ShopFragment extends Fragment implements RecyclerProductAdapter.Ite
         return fragment;
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +88,17 @@ public class ShopFragment extends Fragment implements RecyclerProductAdapter.Ite
         recyclerView = (RecyclerView) view.findViewById(R.id.rv);
         linearLayoutManager = new GridLayoutManager(getActivity(),2,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        productsList = databaseHelper.getProducts();
+
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+
+            productsList = databaseHelper.getProductsByCategory(mParam1);
+
+        }
+        else {
+            productsList = databaseHelper.getProducts();
+        }
+
         adapter = new RecyclerProductAdapter(productsList,getActivity(),this);
         recyclerView.setAdapter(adapter);
         return  view;
@@ -126,9 +138,21 @@ public class ShopFragment extends Fragment implements RecyclerProductAdapter.Ite
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public void addToCart(int id) {
         databaseHelper.addToCart(id);
-        Toast.makeText(getActivity().getApplicationContext(),"ID is "+ id,Toast.LENGTH_SHORT).show();
+        if (mListener != null) {
+            mListener.onFragmentInteraction();
+        }
     }
 
     /**

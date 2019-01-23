@@ -121,7 +121,7 @@ public class CartFragment extends Fragment  implements RecyclerCartAdapter.CartI
         super.onResume();
         super.onResume();
         if (mListener != null) {
-            mListener.changeBottomNavSelection(R.id.navigation_cart);
+            mListener.changeBottomNavSelectionCartFragment(R.id.navigation_cart);
         }
     }
 
@@ -143,7 +143,7 @@ public class CartFragment extends Fragment  implements RecyclerCartAdapter.CartI
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction();
-        void changeBottomNavSelection(int menuItem);
+        void changeBottomNavSelectionCartFragment(int menuItem);
 
     }
 }

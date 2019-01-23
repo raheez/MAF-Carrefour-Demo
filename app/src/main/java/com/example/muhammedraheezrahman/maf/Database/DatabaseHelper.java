@@ -119,4 +119,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.close();
         return productList;
     }
+
+    public List<Product> getProductsByCategory(String word){
+        List<Product> productList = new ArrayList<>();
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.query(Product.TABLE_NAME,new String[]{Product.COLUMN_TITLE,Product.COLUMN_PRICE,Product.COLUMN_ID,Product.COLUMN_CATEGORY,Product.COLUMN_ADDEDTOCART,Product.COLUMN_IMAGE},
+                                                         Product.COLUMN_CATEGORY + " LIKE ? ", new String[]{"%"+word+"%"},null,null,null,null );
+        if (cursor.moveToFirst()){
+            do{
+
+                Product product = new Product();
+                product.setTitle(cursor.getString(cursor.getColumnIndex(Product.COLUMN_TITLE)));
+                product.setCategory(cursor.getString(cursor.getColumnIndex(Product.COLUMN_CATEGORY)));
+                product.setImageURL(cursor.getString(cursor.getColumnIndex(Product.COLUMN_IMAGE)));
+                product.setPrice(cursor.getFloat(cursor.getColumnIndex(Product.COLUMN_PRICE)));
+                product.setAddedToCart(cursor.getInt(cursor.getColumnIndex(Product.COLUMN_ADDEDTOCART)));
+                product.setId(cursor.getInt(cursor.getColumnIndex(Product.COLUMN_ID)));
+                productList.add(product);
+
+            }while (cursor.moveToNext());
+
+        }
+        database.close();
+
+        return productList;
+    }
 }
