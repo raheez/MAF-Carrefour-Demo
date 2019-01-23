@@ -38,7 +38,7 @@ import java.util.TimerTask;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements RecyclerProductAdapter.ItemClickListener {
+public class HomeFragment extends Fragment implements RecyclerProductAdapter.ItemClickListener,RecyclerCategoryAdapter.ClickCategoryItem {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,6 +59,8 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
     private LinearLayoutManager linearLayoutManager_categories;
     private LinearLayoutManager linearLayoutManager_electronics;
     private LinearLayoutManager linearLayoutManager_smartPhones;
+    public  List<String> categoriesTitlesList;
+    public  List<String> electonicsTitlesList;
     private DatabaseHelper databaseHelper;
 
     // TODO: Rename and change types of parameters
@@ -157,7 +159,13 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
                                                  ,"https://image.shutterstock.com/z/stock-photo-flat-lay-photo-baby-stuff-sponge-yellow-liquid-soap-package-blue-shampoo-bottle-pink-shower-gel-1074999122.jpg"
                                                     };
         String categoriesTitles[] = new String[]{"Fresh Food","Groceries","Baby World"};
-        adapter_categories = new RecyclerCategoryAdapter(getActivity().getApplicationContext(),CategoriesImages,categoriesTitles);
+        categoriesTitlesList = new ArrayList<>();
+        categoriesTitlesList.add("Fresh Food");
+        categoriesTitlesList.add("Groceries");
+        categoriesTitlesList.add("Baby World");
+
+        RecyclerCategoryAdapter.addToList(categoriesTitlesList);
+        adapter_categories = new RecyclerCategoryAdapter(getActivity(),CategoriesImages,categoriesTitlesList,this);
         recyclerView_categories.setAdapter(adapter_categories);
 
         //electronics recycler View
@@ -165,7 +173,14 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
                                                     ,"http://keralaonlinechannel.com/upload/images/5bt4k4.jpg"
                                                     ,"https://qalebfa.com/wp-content/uploads/wooden-royal-sofa-couch-3-seater-teak-wood-white-home-furniture.jpg"};
         String electonicsTitles[] = new String[]{"Electonics","Home Appliances","Home furniture"};
-        adapter_electronics = new RecyclerCategoryAdapter(getActivity().getApplicationContext(),electronicsImages,electonicsTitles);
+
+        electonicsTitlesList = new ArrayList<>();
+        electonicsTitlesList.add("Electonics");
+        electonicsTitlesList.add("Home Appliances");
+        electonicsTitlesList.add("Home furniture");
+
+        RecyclerCategoryAdapter.addToList(electonicsTitlesList);
+        adapter_electronics = new RecyclerCategoryAdapter(getActivity().getApplicationContext(),electronicsImages,electonicsTitlesList,this);
         recyclerView_electronics.setAdapter(adapter_electronics);
 
 
@@ -179,6 +194,7 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
                                                     ,"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone8/plus/iphone8-plus-silver-select-2018?wid=513&hei=556&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1522347733364"
                                                     ,"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/BlackBerry-Priv.jpg/1200px-BlackBerry-Priv.jpg"
                                                     ,"https://photos.dialcom.lk/big/items/-passport-mobile-phones-price-in-sri-lanka_374_jpg"};
+
         List<Product> productList = new ArrayList<>();
         productList = databaseHelper.getProducts();
         adapterHomeProducts = new RecyclerProductAdapter(productList,getActivity(),this);
@@ -228,6 +244,7 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
     public void onStop() {
         super.onStop();
         timer.cancel();
+        RecyclerCategoryAdapter.clearStaticList();
 
     }
 
@@ -253,6 +270,14 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
 
     }
 
+    @Override
+    public void clickOnCategoryCard(String title) {
+        Toast.makeText(getActivity().getApplicationContext(),"The title is "+title,Toast.LENGTH_SHORT).show();
+        if (mListener != null) {
+            mListener.transferToShopFragmentOnCategoryClick(title);
+        }
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -267,6 +292,7 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
         // TODO: Update argument type and name
         void onFragmentInteraction();
         void changeBottomNavSelection(int menuItem);
+        void transferToShopFragmentOnCategoryClick(String title);
 
     }
 

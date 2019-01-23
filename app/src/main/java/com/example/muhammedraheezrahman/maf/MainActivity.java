@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
     private RelativeLayout searchLayout;
     private EditText searchTv;
     private TextView welcometitleTv;
+    private ShopFragment shopFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +51,15 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
         searchLayout = (RelativeLayout) findViewById(R.id.search_layout);
         searchTv = (EditText) findViewById(R.id.searchEt);
         welcometitleTv = (TextView) findViewById(R.id.welcomeTv);
+        shopFragment = new ShopFragment();
 
         searchTv.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH){
 
-                    ShopFragment fragment = new ShopFragment();
 
-                    loadFragments(fragment.newInstance(searchTv.getText().toString(),null));
+                    loadFragments(shopFragment.newInstance(searchTv.getText().toString(),null));
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(searchTv.getWindowToken(), 0);
 
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
             }
 
         });
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -102,7 +106,10 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
                 ,"https://www.jarir.com/media/catalog/product/cache/1/image/400x400/9df78eab33525d08d6e5fb8d27136e95/5/1/513984.jpg"
                 ,"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone8/plus/iphone8-plus-silver-select-2018?wid=513&hei=556&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1522347733364"
                 ,"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/BlackBerry-Priv.jpg/1200px-BlackBerry-Priv.jpg"
-                ,"https://i-cdn.phonearena.com/images/phones/49346-xlarge/BlackBerry-Passport-1.jpg"};
+                ,"https://i-cdn.phonearena.com/images/phones/49346-xlarge/BlackBerry-Passport-1.jpg"
+                ,"https://image.shutterstock.com/image-photo/close-white-beauty-cream-yogurt-450w-129400175.jpg"
+                ,"https://image.shutterstock.com/image-photo/market-packed-dates-450w-108316640.jpg"
+        };
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
         List<Product> productList = new ArrayList<>();
@@ -114,6 +121,9 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
         productList.add(new Product("Apple Iphone 8 128GB",smartphoneImageURL[5],2090,"smartPhone",0,0));
         productList.add(new Product("Blackberry Priv",smartphoneImageURL[6],2700,"smartPhone",0,0));
         productList.add(new Product("Blackberry Passport",smartphoneImageURL[7],2100,"Mobile",0,0));
+        productList.add(new Product("Galic paste",smartphoneImageURL[8],6,"Fresh Food",0,0));
+        productList.add(new Product("Blackberry Passport",smartphoneImageURL[7],2100,"smartPhone",0,0));
+        productList.add(new Product(" Saudi Dates",smartphoneImageURL[9],31,"Fresh Food",0,0));
 
         databaseHelper.insertProducts(productList);
 
@@ -154,7 +164,19 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
     public void changeBottomNavSelection(int menuItem) {
         bottomNavigationView.getMenu().findItem(menuItem).setChecked(true);
         welcometitleTv.setText(String.valueOf("Hi,Welcome to Carrefour!"));
+        if (menuItem == R.id.navigation_home){
+            searchTv.setText("");
+        }
         searchLayout.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void transferToShopFragmentOnCategoryClick(String title) {
+
+        shopFragment = shopFragment.newInstance(title,null);
+        loadFragments(shopFragment);
+        searchTv.setText(title);
 
     }
 

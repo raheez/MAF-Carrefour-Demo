@@ -29,21 +29,6 @@ class CartProductViewHolder extends RecyclerView.ViewHolder{
         imageView = (ImageView) itemView.findViewById(R.id.productImage);
         titleTv = (TextView) itemView.findViewById(R.id.title);
         priceTv = (TextView) itemView.findViewById(R.id.priceTv);
-//        addToCart = (Button) itemView.findViewById(R.id.add_button);
-//        this.cartItemClickListener = itemClickListener;
-//        addToCart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (itemClickListener!=null){
-//                    int id;
-//
-//                    Product product = RecyclerProductAdapter.productList.get(getAdapterPosition());
-//                    id = product.getId();
-//                    itemClickListener.addToCart(id);
-//                }
-//            }
-//        });
     }
 
 }
