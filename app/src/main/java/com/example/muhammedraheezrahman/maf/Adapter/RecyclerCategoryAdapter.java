@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.muhammedraheezrahman.maf.Fragments.ShopFragment;
 import com.example.muhammedraheezrahman.maf.R;
 
 import java.util.List;
@@ -18,19 +19,28 @@ class ViewHolder extends RecyclerView.ViewHolder{
 
     public ImageView imageView;
     public TextView titleTv;
+    public RecyclerCategoryAdapter.ClickCategoryItem clickCategoryItem;
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
         imageView = (ImageView) itemView.findViewById(R.id.image);
         titleTv = (TextView) itemView.findViewById(R.id.title_seond_line_tv);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickCategoryItem!=null){
+
+                }
+            }
+        });
     }
 }
-public class RecyclerHomeAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class RecyclerCategoryAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private Context context;
     private String[] imagelist;
-    private String[] titlelist;
+    public static String[] titlelist;
 
-    public RecyclerHomeAdapter(Context context, String[] imagelist,String[] titlelist) {
+    public RecyclerCategoryAdapter(Context context, String[] imagelist,String[] titlelist) {
         this.context = context;
         this.imagelist = imagelist;
         this.titlelist = titlelist;
@@ -58,4 +68,10 @@ public class RecyclerHomeAdapter extends RecyclerView.Adapter<ViewHolder> {
     public int getItemCount() {
         return this.imagelist.length;
     }
+
+    public interface ClickCategoryItem{
+
+        public  void clickOnCategoryCard();
+    }
+
 }

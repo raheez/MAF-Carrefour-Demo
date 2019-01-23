@@ -16,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.muhammedraheezrahman.maf.Adapter.CustomPagerAdapter;
-import com.example.muhammedraheezrahman.maf.Adapter.RecyclerHomeAdapter;
+import com.example.muhammedraheezrahman.maf.Adapter.RecyclerCartAdapter;
+import com.example.muhammedraheezrahman.maf.Adapter.RecyclerCartAdapter.CartItemClickListener;
+import com.example.muhammedraheezrahman.maf.Adapter.RecyclerCategoryAdapter;
 import com.example.muhammedraheezrahman.maf.Adapter.RecyclerProductAdapter;
 import com.example.muhammedraheezrahman.maf.Database.DatabaseHelper;
 import com.example.muhammedraheezrahman.maf.Model.Product;
@@ -48,8 +50,8 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
     private final long PERIOD_TIME = 2500;
     private  int CURRENT_PAGE = 0;
     private  int NO_OF_PAGE = 0;
-    private RecyclerHomeAdapter adapter_categories;
-    private RecyclerHomeAdapter adapter_electronics;
+    private RecyclerCategoryAdapter adapter_categories;
+    private RecyclerCategoryAdapter adapter_electronics;
     private RecyclerProductAdapter adapterHomeProducts;
     private RecyclerView recyclerView_categories;
     private RecyclerView recyclerView_electronics;
@@ -155,7 +157,7 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
                                                  ,"https://image.shutterstock.com/z/stock-photo-flat-lay-photo-baby-stuff-sponge-yellow-liquid-soap-package-blue-shampoo-bottle-pink-shower-gel-1074999122.jpg"
                                                     };
         String categoriesTitles[] = new String[]{"Fresh Food","Groceries","Baby World"};
-        adapter_categories = new RecyclerHomeAdapter(getActivity().getApplicationContext(),CategoriesImages,categoriesTitles);
+        adapter_categories = new RecyclerCategoryAdapter(getActivity().getApplicationContext(),CategoriesImages,categoriesTitles);
         recyclerView_categories.setAdapter(adapter_categories);
 
         //electronics recycler View
@@ -163,7 +165,7 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
                                                     ,"http://keralaonlinechannel.com/upload/images/5bt4k4.jpg"
                                                     ,"https://qalebfa.com/wp-content/uploads/wooden-royal-sofa-couch-3-seater-teak-wood-white-home-furniture.jpg"};
         String electonicsTitles[] = new String[]{"Electonics","Home Appliances","Home furniture"};
-        adapter_electronics = new RecyclerHomeAdapter(getActivity().getApplicationContext(),electronicsImages,electonicsTitles);
+        adapter_electronics = new RecyclerCategoryAdapter(getActivity().getApplicationContext(),electronicsImages,electonicsTitles);
         recyclerView_electronics.setAdapter(adapter_electronics);
 
 
@@ -267,4 +269,6 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
         void changeBottomNavSelection(int menuItem);
 
     }
+
+
 }

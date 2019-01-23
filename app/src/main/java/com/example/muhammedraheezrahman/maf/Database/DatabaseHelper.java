@@ -124,7 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.query(Product.TABLE_NAME,new String[]{Product.COLUMN_TITLE,Product.COLUMN_PRICE,Product.COLUMN_ID,Product.COLUMN_CATEGORY,Product.COLUMN_ADDEDTOCART,Product.COLUMN_IMAGE},
-                                                         Product.COLUMN_CATEGORY + " LIKE ? ", new String[]{"%"+word+"%"},null,null,null,null );
+                                                         Product.COLUMN_CATEGORY + " LIKE '%"+  word + "%' OR " + Product.COLUMN_TITLE + " LIKE '%"+ word + "%'", null,null,null,null,null );
         if (cursor.moveToFirst()){
             do{
 

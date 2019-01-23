@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
                 ,"https://www.jarir.com/media/catalog/product/cache/1/image/400x400/9df78eab33525d08d6e5fb8d27136e95/5/1/513984.jpg"
                 ,"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone8/plus/iphone8-plus-silver-select-2018?wid=513&hei=556&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1522347733364"
                 ,"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/BlackBerry-Priv.jpg/1200px-BlackBerry-Priv.jpg"
-                ,"https://photos.dialcom.lk/big/items/-passport-mobile-phones-price-in-sri-lanka_374_jpg"};
+                ,"https://i-cdn.phonearena.com/images/phones/49346-xlarge/BlackBerry-Passport-1.jpg"};
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
         List<Product> productList = new ArrayList<>();
