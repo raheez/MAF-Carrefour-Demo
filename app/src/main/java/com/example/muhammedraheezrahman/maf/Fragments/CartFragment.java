@@ -9,9 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.muhammedraheezrahman.maf.Adapter.RecyclerCartAdapter;
-import com.example.muhammedraheezrahman.maf.Adapter.RecyclerProductAdapter;
 import com.example.muhammedraheezrahman.maf.Database.DatabaseHelper;
 import com.example.muhammedraheezrahman.maf.Model.Product;
 import com.example.muhammedraheezrahman.maf.R;
@@ -43,7 +43,7 @@ public class CartFragment extends Fragment  implements RecyclerCartAdapter.CartI
     private RecyclerCartAdapter adapter;
     private List<Product> productList;
     private DatabaseHelper databaseHelper;
-
+    private TextView totalPriceTv;
     public CartFragment() {
         // Required empty public constructor
     }
@@ -81,11 +81,24 @@ public class CartFragment extends Fragment  implements RecyclerCartAdapter.CartI
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_cart, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_cart);
+        totalPriceTv = (TextView) view.findViewById(R.id.grnad_amount_tv);
         databaseHelper = new DatabaseHelper(getActivity().getApplicationContext());
         linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
         productList = new ArrayList<>();
         productList = databaseHelper.getProductsInCart();
+        float totalPrice = 0;
+        if (!productList.isEmpty()){
+            for (Product product : productList){
+                totalPrice = totalPrice + product.getPrice();
+            }
+            totalPriceTv.setText(String.valueOf(totalPrice)+ " AED");
+        }
+        else{
+            totalPriceTv.setText(0+ " AED");
+        }
+
+
         adapter = new RecyclerCartAdapter(productList,getActivity(),this);
         recyclerView.setAdapter(adapter);
 
