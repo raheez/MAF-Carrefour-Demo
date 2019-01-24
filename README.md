@@ -1,5 +1,5 @@
 # MAF-Carrefour-Demo
-Demo Purpose
+For Demo and Study Purpose
 
 
 # Carrefour demo App
