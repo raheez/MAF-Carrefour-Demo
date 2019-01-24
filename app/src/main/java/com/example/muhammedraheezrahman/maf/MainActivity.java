@@ -32,7 +32,7 @@ import com.example.muhammedraheezrahman.maf.Model.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity  implements ShopFragment.OnFragmentInteractionListener, HomeFragment.OnFragmentInteractionListener,CartFragment.OnFragmentInteractionListener{
+public class MainActivity extends RootActivity  implements ShopFragment.OnFragmentInteractionListener, HomeFragment.OnFragmentInteractionListener,CartFragment.OnFragmentInteractionListener{
 
     private BottomNavigationView bottomNavigationView;
     private TextView notificationNo;
@@ -212,5 +212,9 @@ public class MainActivity extends AppCompatActivity  implements ShopFragment.OnF
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

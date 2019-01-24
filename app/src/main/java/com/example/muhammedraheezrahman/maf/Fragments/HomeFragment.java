@@ -272,7 +272,6 @@ public class HomeFragment extends Fragment implements RecyclerProductAdapter.Ite
 
     @Override
     public void clickOnCategoryCard(String title) {
-        Toast.makeText(getActivity().getApplicationContext(),"The title is "+title,Toast.LENGTH_SHORT).show();
         if (mListener != null) {
             mListener.transferToShopFragmentOnCategoryClick(title);
         }
